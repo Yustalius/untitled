@@ -8,13 +8,13 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class TODOApiClient {
 
-  public String register(String email, String password) {
+  public Response register(String email, String password) {
     String requestBody = "{"
         + "\"email\": \"" + email + "\","
         + "\"password\": \"" + password + "\""
         + "}";
 
-    Response response = given()
+    return given()
         .contentType(ContentType.JSON)
         .body(requestBody)
         .when()
@@ -24,7 +24,20 @@ public class TODOApiClient {
         .body("user.email", equalTo(email))
         .extract()
         .response();
+  }
 
-    return response.path("accessToken");
+  public Response login(String email, String password) {
+    String requestBody = "{"
+        + "\"email\": \"" + email + "\","
+        + "\"password\": \"" + password + "\""
+        + "}";
+
+    return given()
+        .contentType(ContentType.JSON)
+        .body(requestBody)
+        .when()
+        .post("http://2.59.41.2:7320/api/auth/login")
+        .then()
+        .extract().response();
   }
 }
