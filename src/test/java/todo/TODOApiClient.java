@@ -20,7 +20,7 @@ public class TODOApiClient {
         .when()
         .post("http://2.59.41.2:7320/api/auth/register")
         .then()
-        .statusCode(201)
+        .statusCode(200)
         .body("user.email", equalTo(email))
         .extract()
         .response();
